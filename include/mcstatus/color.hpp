@@ -1,8 +1,8 @@
 #ifndef JINGJING_COLOR_HPP
 #define JINGJING_COLOR_HPP
 
-#ifndef __linux__
-#error YOU MUST USE LINUX
+#ifdef _WIN32
+#error OSNotUnixLikeException
 #endif
 
 #include <string>
