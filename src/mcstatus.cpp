@@ -2,6 +2,7 @@
 #include "mcstatus/packet.hpp"
 
 #include <string>
+#include <cstdint>
 #include <iostream>
 
 #include <boost/property_tree/ptree.hpp>
@@ -12,7 +13,7 @@ namespace mc
 {
 
 status::status(const std::string& ipv4,
-               short port) :
+               uint16_t port) :
     ep(boost::asio::ip::address::from_string(ipv4), port),
     sock(service)
 {
@@ -70,8 +71,8 @@ void status::json2status(const std::string& json)
     for (auto& players : pt.get_child("players"))
         players_array.push_back(players.second.get_value<std::string>());
 
-    m_motd.player_max = atoi(players_array[0].c_str());
-    m_motd.player_online = atoi(players_array[1].c_str());
+    m_motd.player_max = std::stoi(players_array[0]);
+    m_motd.player_online = std::stoi(players_array[1]);
 }
 
 motd_t status::getMotd()

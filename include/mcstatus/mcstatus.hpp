@@ -2,6 +2,7 @@
 #define JINGJING_MCSTATUS_HPP
 
 #include <string>
+#include <cstdint>
 #include <boost/asio.hpp>
 
 namespace mc
@@ -20,7 +21,7 @@ class status
 {
 public:
     status(const std::string& ipv4,
-           short port = 25565);
+           uint16_t port = 25565);
     ~status();
 public:
     int unpack_varint();
