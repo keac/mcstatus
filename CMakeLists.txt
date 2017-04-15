@@ -1,24 +1,25 @@
-cmake_minimum_required (VERSION 3.1)
+cmake_minimum_required (VERSION 2.8)
 project (mcstatus)
 
 set(PROJECT_SOURCE_DIR "./src")
 set(PROJECT_INCLUDE_DIR "./include")
+include_directories(${PROJECT_INCLUDE_DIR})
 
 set (SOURCE_FILES
+    "${PROJECT_SOURCE_DIR}/color.cpp"
     "${PROJECT_SOURCE_DIR}/packet.cpp"
     "${PROJECT_SOURCE_DIR}/mcstatus.cpp"
 )
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-# Boost
-find_package(Boost 1.55 COMPONENTS system REQUIRED)
+# [Boost]
+find_package(Boost 1.59 COMPONENTS system REQUIRED)
 if(${Boost_FOUND})
     include_directories(${Boost_INCLUDE_DIRS})
     link_directories(${Boost_LIBRARY_DIR})
 endif()
-
-include_directories(${PROJECT_INCLUDE_DIR})
+# [Boost end]
 
 add_library(mcstatus SHARED ${SOURCE_FILES})
 
@@ -27,4 +28,4 @@ target_link_libraries(mcstatus ${Boost_LIBRARIES})
 
 # Install
 install (TARGETS mcstatus LIBRARY DESTINATION lib)
-install (FILES "${PROJECT_INCLUDE_DIR}/mcstatus/mcstatus.hpp" "${PROJECT_INCLUDE_DIR}/mcstatus/packet.hpp" DESTINATION include/mcstatus)
+install (DIRECTORY ${PROJECT_INCLUDE_DIR} DESTINATION include)
