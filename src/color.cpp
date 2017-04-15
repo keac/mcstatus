@@ -61,59 +61,57 @@ std::string color::toString() const
 int color::minecraftcolor2sgr(char s)
 {
     int sgr = 0;
-        switch (s)
-        {
-            case '0':
-                sgr = 30;
-                break;
-            case '1':
-                sgr = 34;
-                break;
-            case '2':
-                sgr = 32;
-                break;
-            case '3':
-                sgr = 36;
-                break;
-            case '4':
-                sgr = 31;
-                break;
-            case '5':
-                sgr = 35;
-                break;
-            case '6':
-                sgr = 33;
-                break;
-            case '7':
-                sgr = 37;
-                break;
-            case '8':
-                sgr = 37;
-                break;
-            case '9':
-                sgr = 34;
-                break;
-            case 'a':
-                sgr = 32;
-                break;
-            case 'b':
-                sgr = 36;
-                break;
-            case 'c':
-                sgr = 31;
-                break;
-            case 'd':
-                sgr = 35;
-                break;
-            case 'l':
-                break;
-            case 'e':
-                sgr = 33;
-                break;
-            default:
-                break;
-        }
-    
+    switch (s)
+    {
+        case '0':
+            sgr = 30;
+            break;
+        case '1':
+            sgr = 34;
+            break;
+        case '2':
+            sgr = 32;
+            break;
+        case '3':
+            sgr = 36;
+            break;
+        case '4':
+            sgr = 31;
+            break;
+        case '5':
+            sgr = 35;
+            break;
+        case '6':
+            sgr = 33;
+            break;
+        case '7':
+            sgr = 37;
+            break;
+        case '8':
+            sgr = 37;
+            break;
+        case '9':
+            sgr = 34;
+            break;
+        case 'a':
+            sgr = 32;
+            break;
+        case 'b':
+            sgr = 36;
+            break;
+        case 'c':
+            sgr = 31;
+            break;
+        case 'd':
+            sgr = 35;
+            break;
+        case 'e':
+            sgr = 33;
+            break;
+        default:
+            break;
+    }
+
     return sgr;
 }
 
@@ -121,7 +119,7 @@ std::string color::mcColorToUnixColor(const std::string& msg)
 {
     std::string buffer = msg;
 
-    for (int size = msg.find("§"); size < msg.rfind("§"); size = msg.find("§", size+1))
+    for (int size = msg.find("§"); size <= msg.rfind("§"); size = msg.find("§", size+1))
     {
         std::string old;
         std::string to;
