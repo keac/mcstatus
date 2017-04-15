@@ -1,0 +1,30 @@
+language: cpp
+
+compiler: 
+ - g++-4.8
+
+sudo: required
+
+addons:
+    apt:
+        sources:
+        - llvm-toolchain-precise-3.8
+        - ubuntu-toolchain-r-test
+        - sourceline: 'ppa:boost-latest/ppa'
+        packages:
+        - cmake
+        - g++-4.8
+        - libmsgpack-dev
+        - libboost1.55-all-dev
+        - libhiredis-dev
+        - openssl
+
+install:
+    - sudo unlink /usr/bin/g++ && sudo ln -s /usr/bin/g++-4.8 /usr/bin/g++
+
+script:
+    - $CXX --version
+    - mkdir build
+    - cd build
+    - cmake ..
+    - make
