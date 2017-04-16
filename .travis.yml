@@ -8,11 +8,7 @@ arch:
     - boost
     - cmake
   script:
-    - git clone https://github.com/jingjinghack/mcstatus
-    - cd mcstatus
-    - mkdir build
-    - cd build
-    - cmake ..
+    - cmake .
     - make
 
 script:
