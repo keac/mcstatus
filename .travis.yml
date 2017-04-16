@@ -8,6 +8,7 @@ arch:
     - boost
     - cmake
   script:
+    - cd mcstatus
     - mkdir build
     - cd build
     - cmake ..
