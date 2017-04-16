@@ -1,30 +1,16 @@
-language: cpp
-
-compiler: 
- - g++-4.8
-
 sudo: required
 
-addons:
-    apt:
-        sources:
-        - llvm-toolchain-precise-3.8
-        - ubuntu-toolchain-r-test
-        - sourceline: 'ppa:boost-latest/ppa'
-        packages:
-        - cmake
-        - g++-4.8
-        - libmsgpack-dev
-        - libboost1.59-all-dev
-        - libhiredis-dev
-        - openssl
-
-install:
-    - sudo unlink /usr/bin/g++ && sudo ln -s /usr/bin/g++-4.8 /usr/bin/g++
-
-script:
-    - $CXX --version
+arch:
+  repos:
+    - papyros=http://dash.papyros.io/repos/$repo/$arch
+  packages:
+    - gcc
+    - boost
+  script:
     - mkdir build
     - cd build
     - cmake ..
     - make
+
+script:
+  - "curl -s https://raw.githubusercontent.com/mikkeloscar/arch-travis/master/arch-travis.sh | bash"
