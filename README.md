@@ -1,4 +1,6 @@
 # mcstatus
+[![Build Status](https://travis-ci.org/jingjinghack/mcstatus.svg?branch=master)](https://travis-ci.org/jingjinghack/mcstatus)
+
 minecraft status checker.
 
 纯 C++ 编写，用了 boost 库，欢迎点星。
