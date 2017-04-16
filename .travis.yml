@@ -2,10 +2,11 @@ sudo: required
 
 arch:
   repos:
-    - papyros=http://dash.papyros.io/repos/$repo/$arch
+    - papyros=https://mirror.csclub.uwaterloo.ca/archlinux/$repo/os/$arch
   packages:
     - gcc
     - boost
+    - cmake
   script:
     - mkdir build
     - cd build
