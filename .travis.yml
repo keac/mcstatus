@@ -2,7 +2,7 @@ sudo: required
 
 arch:
   repos:
-    - papyros=https://mirror.csclub.uwaterloo.ca/archlinux/$repo/os/$arch
+      - archlinuxfr=http://repo.archlinux.fr/$arch
   packages:
     - gcc
     - boost
