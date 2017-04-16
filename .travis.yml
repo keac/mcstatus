@@ -15,7 +15,7 @@ addons:
         - cmake
         - g++-4.8
         - libmsgpack-dev
-        - libboost1.55-all-dev
+        - libboost1.59-all-dev
         - libhiredis-dev
         - openssl
 
