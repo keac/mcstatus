@@ -1,9 +1,10 @@
-#include <iostream>
-#include <cstring>
+#include <iostream> // std::cout and std::endl
+#include <cstring> // std::atoi
 
 #include <mcstatus/mcstatus.hpp>
 #include <mcstatus/color.hpp>
 
+// Show usage
 void usage()
 {
     std::cout <<
@@ -15,11 +16,13 @@ void usage()
 
 int main(int argc, char** argv)
 {
-    if (argc == 1) usage();
+    if (argc) usage(); // No parameters
 
+    // Server's ip(v4) and port
     std::string hostname;
     uint16_t port;
 
+    // Process the command-line parameters
     int opt_idx = 1;
     for (; opt_idx < argc; opt_idx++)
     {
@@ -46,12 +49,20 @@ int main(int argc, char** argv)
         }
     }
 
-    if (argc - opt_idx != 0) return 1;
+    if (argc - opt_idx) usage(); // no zuo no die XD
 
+    // Get the motd
     mc::status motd(hostname, port);
     mc::motd_t m = motd.getMotd();
-    std::cout << "players: " << m.player_online << "/" << m.player_max << std::endl;
+    // Format: player_online/player_max
+    std::cout 
+        << "players: "
+        << m.player_online
+        << "/"
+        << m.player_max 
+        << std::endl;
 
+    // to UNIX-CONSOLE-COLOR.
     std::cout << mc::color(m.description).toString() << std::endl;
     
     return 0;
