@@ -18,7 +18,7 @@ int main(int argc, char** argv)
     if (argc == 1) usage();
 
     std::string hostname;
-    short port;
+    uint16_t port;
 
     int opt_idx = 1;
     for (; opt_idx < argc; opt_idx++)
