@@ -40,7 +40,7 @@ int main(int argc, char** argv)
             !strcmp(argv[opt_idx], "-p"))
         {
             ++opt_idx;
-            port = static_cast<short> (std::atoi(argv[opt_idx]));
+            port = static_cast<uint16_t> (std::atoi(argv[opt_idx]));
         }
         else
         {
