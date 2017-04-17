@@ -1,23 +1,24 @@
 # mcstatus
 [![Build Status](https://travis-ci.org/jingjinghack/mcstatus.svg?branch=master)](https://travis-ci.org/jingjinghack/mcstatus)
 
-minecraft status checker.
+A Minecraft Motd Library Written in C++
 
-纯 C++ 编写，用了 boost 库，欢迎点星。
 ![screenshot1](https://raw.githubusercontent.com/jingjinghack/mcstatus/master/screenshot.png)
 
 # How to build
 On Debian/Ubuntu:
 ```
-# apt-get install libboost-dev
+# apt-get install g++ cmake libboost-dev
 $ mkdir build; cd build
 $ cmake ..
 $ make
 ```
 On Arch Linux: 
 ```
-# pacman -S boost
+# pacman -S gcc cmake boost
 $ mkdir build; cd build
 $ cmake ..
 $ make
 ```
+# Examples
+See, https://github.com/jingjinghack/mcstatus/blob/master/example/src/main.cpp
