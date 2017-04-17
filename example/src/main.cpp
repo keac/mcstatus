@@ -1,8 +1,5 @@
 #include <iostream>
-#include <string>
-#include <cstdlib>
 #include <cstring>
-#include <cstdio>
 
 #include <mcstatus/mcstatus.hpp>
 #include <mcstatus/color.hpp>
