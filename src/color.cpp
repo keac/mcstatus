@@ -60,59 +60,27 @@ std::string color::toString() const
 
 int color::minecraftcolor2sgr(char s)
 {
-    int sgr = 0;
     switch (s)
     {
-        case '0':
-            sgr = 30;
-            break;
-        case '1':
-            sgr = 34;
-            break;
-        case '2':
-            sgr = 32;
-            break;
-        case '3':
-            sgr = 36;
-            break;
-        case '4':
-            sgr = 31;
-            break;
-        case '5':
-            sgr = 35;
-            break;
-        case '6':
-            sgr = 33;
-            break;
-        case '7':
-            sgr = 37;
-            break;
-        case '8':
-            sgr = 37;
-            break;
-        case '9':
-            sgr = 34;
-            break;
-        case 'a':
-            sgr = 32;
-            break;
-        case 'b':
-            sgr = 36;
-            break;
-        case 'c':
-            sgr = 31;
-            break;
-        case 'd':
-            sgr = 35;
-            break;
-        case 'e':
-            sgr = 33;
-            break;
+        case '0': return 30;
+        case '1': return 34;
+        case '2': return 32;
+        case '3': return 36;
+        case '4': return 31;
+        case '5': return 35;
+        case '6': return 33;
+        case '7': return 37;
+        case '8': return 37;
+        case '9': return 34;
+        case 'a': return 32;
+        case 'b': return 36;
+        case 'c': return 31;
+        case 'd': return 35;
+        case 'e': return 33;
         default:
-            break;
+            return 0;
     }
 
-    return sgr;
 }
 
 std::string color::mcColorToUnixColor(const std::string& msg)

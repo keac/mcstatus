@@ -57,7 +57,7 @@ packet packet::from_string(const std::string& packets)
         std::vector<std::string> packets_split;
         boost::split(packets_split, packets, boost::is_any_of(" "));
 
-        for (auto&& x : packets_split)
+        for (const auto&& x : packets_split)
             buffer.push_back(convert(x));
     } else
     {
@@ -82,62 +82,62 @@ packet_builder::~packet_builder()
 
 void packet_builder::write_int8(int8_t v)
 {
-    //TODO: write int8
+    // TODO: write int8
 }
 
 void packet_builder::write_uint8(uint8_t v)
 {
-    //TODO: write uint8
+    // TODO: write uint8
 }
 
 void packet_builder::write_int16(int16_t v)
 {
-    //TODO: write int16
+    // TODO: write int16
 }
 
 void packet_builder::write_uint16(uint16_t v)
 {
-    //TODO: write uint16
+    // TODO: write uint16
 }
 
 void packet_builder::write_int32(int32_t v)
 {
-    //TODO: write int32
+    // TODO: write int32
 }
 
 void packet_builder::write_int64(int64_t v)
 {
-    //TODO: write int64
+    // TODO: write int64
 }
 
 void packet_builder::write_varint32(int32_t v)
 {
-    //TODO: write varint
+    // TODO: write varint
 }
 
 void packet_builder::write_varint64(int64_t v)
 {
-    //TODO: write varlong
+    // TODO: write varlong
 }
 
 void packet_builder::write_float(float v)
 {
-    //TODO: write float
+    // TODO: write float
 }
 
 void packet_builder::write_double(double v)
 {
-    //TODO: write double
+    // TODO: write double
 }
 
 void packet_builder::write_bool(bool v)
 {
-    //TODO: write bool
+    // TODO: write bool
 }
 
 void packet_builder::write_string(std::string& v)
 {
-    //TODO: write string
+    // TODO: write string
 }
 
 }
