@@ -70,4 +70,74 @@ packet packet::from_string(const std::string& packets)
     return packet_new;
 }
 
+// packet_builder
+
+packet_builder::packet_builder()
+{
+}
+
+packet_builder::~packet_builder()
+{
+}
+
+void packet_builder::write_int8(int8_t v)
+{
+    //TODO: write int8
+}
+
+void packet_builder::write_uint8(uint8_t v)
+{
+    //TODO: write uint8
+}
+
+void packet_builder::write_int16(int16_t v)
+{
+    //TODO: write int16
+}
+
+void packet_builder::write_uint16(uint16_t v)
+{
+    //TODO: write uint16
+}
+
+void packet_builder::write_int32(int32_t v)
+{
+    //TODO: write int32
+}
+
+void packet_builder::write_int64(int64_t v)
+{
+    //TODO: write int64
+}
+
+void packet_builder::write_varint32(int32_t v)
+{
+    //TODO: write varint
+}
+
+void packet_builder::write_varint64(int64_t v)
+{
+    //TODO: write varlong
+}
+
+void packet_builder::write_float(float v)
+{
+    //TODO: write float
+}
+
+void packet_builder::write_double(double v)
+{
+    //TODO: write double
+}
+
+void packet_builder::write_bool(bool v)
+{
+    //TODO: write bool
+}
+
+void packet_builder::write_string(std::string& v)
+{
+    //TODO: write string
+}
+
 }
