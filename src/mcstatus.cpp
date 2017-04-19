@@ -22,7 +22,7 @@ status::status(const std::string& ipv4,
 
 status::~status()
 {
-    sock.shutdown(boost::asio::ip::tcp::socket::shutdown_receive);
+    sock.shutdown(boost::asio::socket_base::shutdown_both);
     sock.close();
 }
 
