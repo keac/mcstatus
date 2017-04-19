@@ -57,7 +57,7 @@ packet packet::from_string(const std::string& packets)
         std::vector<std::string> packets_split;
         boost::split(packets_split, packets, boost::is_any_of(" "));
 
-        for (const auto&& x : packets_split)
+        for (auto&& x : packets_split)
             buffer.push_back(convert(x));
     } else
     {
