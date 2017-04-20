@@ -4,6 +4,8 @@
 #include <string>
 #include <cstdint>
 #include <iostream>
+#include <vector>
+#include <iterator>
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
@@ -94,9 +96,7 @@ void status::reMotd()
 
     mc::packet p = mc::packet::from_string("10 00 BC 02 09 31 32 37 2E 30 2E 30 2E 31 09 1D 01 01 00");
 
-    sock.write_some(boost::asio::buffer(
-                p.getPacket()
-                ));
+    sock.write_some(boost::asio::buffer(p.getPacket()));
     
     unpack_varint();
     unpack_varint();

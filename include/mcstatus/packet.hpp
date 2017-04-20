@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <deque>
 
 namespace mc
 {
@@ -41,12 +42,12 @@ public:
     void write_float(float v);
     void write_double(double v);
     void write_bool(bool v);
-    void write_string(std::string& v);
+    void write_string(const std::string& v);
     void clear();
-    packet_t completePacket(uint8_t packetID);
+    packet_t completePacket(int packetID);
 
   protected:
-    packet_t packet;
+    std::deque<unsigned char> m_packet;
 };
 
 } // namespace mc

@@ -1,9 +1,8 @@
 #include "mcstatus/packet.hpp"
 
 #include <string>
+#include <cassert>
 #include <vector>
-#include <sstream>
-#include <iostream>
 
 #include <boost/algorithm/string.hpp>
 
@@ -82,62 +81,96 @@ packet_builder::~packet_builder()
 
 void packet_builder::write_int8(int8_t v)
 {
-    // TODO: write int8
+    m_packet.push_back(static_cast<unsigned char>(v));
 }
 
 void packet_builder::write_uint8(uint8_t v)
 {
-    // TODO: write uint8
+    m_packet.push_back(static_cast<unsigned char>(v));
 }
 
 void packet_builder::write_int16(int16_t v)
 {
-    // TODO: write int16
-}
+    uint8_t l = static_cast<uint8_t>(v & 0x00FF);
+    uint8_t h = static_cast<uint8_t>((v & 0xFF00) >> 8);
 
+    m_packet.push_back(h); // higt
+    m_packet.push_back(l); // low
+
+}
 void packet_builder::write_uint16(uint16_t v)
 {
-    // TODO: write uint16
+    uint8_t l = static_cast<uint8_t>(v & 0x00FF);
+    uint8_t h = static_cast<uint8_t>((v & 0xFF00) >> 8);
+
+    m_packet.push_back(h); // higt
+    m_packet.push_back(l); // low
 }
 
 void packet_builder::write_int32(int32_t v)
 {
-    // TODO: write int32
+    m_packet.push_back(static_cast<unsigned char>(v));
 }
 
 void packet_builder::write_int64(int64_t v)
 {
-    // TODO: write int64
+    m_packet.push_back(static_cast<unsigned char>(v));
 }
 
 void packet_builder::write_varint32(int32_t v)
 {
-    // TODO: write varint
+    while (v > 127)
+    {
+        m_packet.push_back(static_cast<unsigned char>(v & 127) | 128);
+        v >>= 7;
+    }
+    m_packet.push_back(static_cast<unsigned char>(v & 127));
 }
 
 void packet_builder::write_varint64(int64_t v)
 {
-    // TODO: write varlong
+    while (v > 127)
+    {
+        m_packet.push_back(static_cast<unsigned char>(v & 127) | 128);
+        v >>= 7;
+    }
+    m_packet.push_back(static_cast<unsigned char>(v & 127));
 }
 
 void packet_builder::write_float(float v)
 {
-    // TODO: write float
+    m_packet.push_back(static_cast<unsigned char>(v));
 }
 
 void packet_builder::write_double(double v)
 {
-    // TODO: write double
+    m_packet.push_back(static_cast<unsigned char>(v));
 }
 
 void packet_builder::write_bool(bool v)
 {
-    // TODO: write bool
+    m_packet.push_back(static_cast<unsigned char>(v));
 }
 
-void packet_builder::write_string(std::string& v)
+void packet_builder::write_string(const std::string& v)
 {
-    // TODO: write string
+    assert(!v.empty());
+
+    write_varint32(v.size());
+    for (auto&& x : v) m_packet.push_back(x);
 }
 
+void packet_builder::clear()
+{
+    m_packet.clear();
 }
+
+packet_t packet_builder::completePacket(int packetID)
+{
+    m_packet.push_front(static_cast<unsigned char>(packetID));
+    m_packet.push_front(static_cast<unsigned char>(m_packet.size())); // FIXME: use varint instead of unsigned char (ugly LOL
+    
+    return packet_t(m_packet.begin(), m_packet.end());
+}
+
+} // namespace mc
