@@ -94,9 +94,9 @@ void status::reMotd()
         std::cout << "Can not connect to server :(" << std::endl;
     }
 
-    mc::packet p = mc::packet::from_string("10 00 BC 02 09 31 32 37 2E 30 2E 30 2E 31 09 1D 01 01 00");
+    mc::packet_builder p = mc::packet_builder::from_string("10 00 BC 02 09 31 32 37 2E 30 2E 30 2E 31 09 1D 01 01 00");
 
-    sock.write_some(boost::asio::buffer(p.getPacket()));
+    sock.write_some(boost::asio::buffer(p.toRawPacket()));
     
     unpack_varint();
     unpack_varint();

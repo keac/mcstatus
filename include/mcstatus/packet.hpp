@@ -10,26 +10,12 @@ namespace mc
 
 typedef std::vector<unsigned char> packet_t;
 
-class packet
-{
-public:
-    packet(const std::string& packets);
-    packet();
-    ~packet();
-
-public:
-    void setPacket(packet_t pt);
-    packet_t getPacket() const;
-    
-    static packet from_string(const std::string& packets);
-protected:
-    packet_t packets;
-}; // class packet
-
 class packet_builder
 {
 public:
     packet_builder();
+    packet_builder(const std::string& packets);
+    packet_builder(const char* packets);
     ~packet_builder();
     void write_int8(int8_t v);
     void write_uint8(uint8_t v);
@@ -45,8 +31,12 @@ public:
     void write_string(const std::string& v);
     void clear();
     packet_t completePacket(int packetID);
+    packet_t toRawPacket();
 
-  protected:
+public:
+    static packet_builder from_string(const std::string& packets);
+
+protected:
     std::deque<unsigned char> m_packet;
 };
 

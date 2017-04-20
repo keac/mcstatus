@@ -16,7 +16,7 @@ void usage()
 
 int main(int argc, char** argv)
 {
-    if (argc) usage(); // No parameters
+    if (!argc) usage(); // No parameters
 
     // Server's ip(v4) and port
     std::string hostname;
@@ -49,7 +49,7 @@ int main(int argc, char** argv)
         }
     }
 
-    if (argc - opt_idx) usage(); // no zuo no die XD
+    if (argc - opt_idx != 0) usage(); // no zuo no die XD
 
     // Get the motd
     mc::status motd(hostname, port);

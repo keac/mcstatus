@@ -21,31 +21,25 @@ unsigned char convert(const std::string& s)
 namespace mc
 {
 
-packet::packet(const std::string& packet)
-{
-    from_string(packet);
-}
-
-packet::packet()
+packet_builder::packet_builder()
 {
 }
 
-packet::~packet()
+packet_builder::packet_builder(const std::string& packets)
 {
-    
+    from_string(packets);
 }
 
-void packet::setPacket(packet_t pt)
+packet_builder::packet_builder(const char* packets)
 {
-    packets = pt;
+    from_string(packets);
 }
 
-packet_t packet::getPacket() const
+packet_builder::~packet_builder()
 {
-    return packets;
 }
 
-packet packet::from_string(const std::string& packets)
+packet_builder packet_builder::from_string(const std::string& packets)
 {
     assert((packets.size() >= 2));
 
@@ -63,21 +57,12 @@ packet packet::from_string(const std::string& packets)
         buffer.push_back(convert(packets));
     }
 
-    packet packet_new;
-    packet_new.setPacket(buffer);
+    packet_builder packet_new;
+    packet_new.m_packet = std::deque<unsigned char>(buffer.begin(), buffer.end());
 
     return packet_new;
 }
 
-// packet_builder
-
-packet_builder::packet_builder()
-{
-}
-
-packet_builder::~packet_builder()
-{
-}
 
 void packet_builder::write_int8(int8_t v)
 {
@@ -170,6 +155,11 @@ packet_t packet_builder::completePacket(int packetID)
     m_packet.push_front(static_cast<unsigned char>(packetID));
     m_packet.push_front(static_cast<unsigned char>(m_packet.size())); // FIXME: use varint instead of unsigned char (ugly LOL
     
+    return packet_t(m_packet.begin(), m_packet.end());
+}
+
+packet_t packet_builder::toRawPacket()
+{
     return packet_t(m_packet.begin(), m_packet.end());
 }
 
