@@ -8,7 +8,7 @@
 namespace mc
 {
 
-typedef std::vector<unsigned char> packet_t;
+using packet_t = std::vector<unsigned char>;
 
 class packet_builder
 {
