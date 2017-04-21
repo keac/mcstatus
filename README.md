@@ -1,5 +1,5 @@
 # mcstatus
-[![Build Status](https://travis-ci.org/jingjinghack/mcstatus.svg?branch=master)](https://travis-ci.org/jingjinghack/mcstatus)
+[![Build Status](https://travis-ci.org/MoeLeak/mcstatus.svg?branch=master)](https://travis-ci.org/MoeLeak/mcstatus)
 
 A Minecraft Motd Library Written in C++
 
