@@ -9,6 +9,7 @@
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
+#include <boost/lexical_cast.hpp>
 #include <boost/asio.hpp>
 
 namespace mc
@@ -94,9 +95,14 @@ void status::reMotd()
         std::cout << "Can not connect to server :(" << std::endl;
     }
 
-    mc::packet_builder p = mc::packet_builder::from_string("10 00 BC 02 09 31 32 37 2E 30 2E 30 2E 31 09 1D 01 01 00");
+    mc::packet_builder p;
+    p.write_varint32(316); // Version number
+    p.write_string(sock.remote_endpoint().address().to_string()); // Server IP
+    p.write_uint16(sock.remote_endpoint().port()); // port
+    p.write_varint32(1); // status
 
-    sock.write_some(boost::asio::buffer(p.toRawPacket()));
+    sock.write_some(boost::asio::buffer(p.completePacket(0))); // Send a handshake
+    sock.write_some(boost::asio::buffer(mc::packet_builder().completePacket(0))); // Request the motd
     
     unpack_varint();
     unpack_varint();
