@@ -96,7 +96,7 @@ std::string color::mcColorToUnixColor(const std::string& msg)
         if (minecraftcolor2sgr(msg.at(size+2)) != 0)
             to = format("\x1b[%dm", minecraftcolor2sgr(msg.at(size+2)));
         else
-            to = "\033[0m";
+            to = "";
         buffer = boost::replace_all_copy(buffer, old, to);
     }
 

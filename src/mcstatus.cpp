@@ -5,11 +5,9 @@
 #include <cstdint>
 #include <iostream>
 #include <vector>
-#include <iterator>
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
-#include <boost/lexical_cast.hpp>
 #include <boost/asio.hpp>
 
 namespace mc
