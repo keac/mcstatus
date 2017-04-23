@@ -1,11 +1,13 @@
 # mcstatus
+
+A Minecraft server status probing library written in C++
+
 [![Build Status](https://travis-ci.org/MoeLeak/mcstatus.svg?branch=master)](https://travis-ci.org/MoeLeak/mcstatus)
 
-A Minecraft Motd Library Written in C++
+![screenshot1](https://github.com/MoeLeak/mcstatus/blob/master/screenshot.png?raw=true)
 
-![screenshot1](https://raw.githubusercontent.com/jingjinghack/mcstatus/master/screenshot.png)
+# Building
 
-# How to build
 On Debian/Ubuntu:
 ```
 # apt-get install g++ cmake libboost-dev
@@ -20,5 +22,7 @@ $ mkdir build; cd build
 $ cmake ..
 $ make
 ```
+
 # Examples
-See, https://github.com/jingjinghack/mcstatus/blob/master/example/src/main.cpp
+
+Check [this](https://github.com/MoeLeak/mcstatus/blob/master/example/src/main.cpp) out
