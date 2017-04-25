@@ -115,7 +115,24 @@ void status::reMotd()
         json += reinterpret_cast<char*>(&buff[0]);
     }
 
+    std::cout << json << std::endl;
+
     json2status(json);
+
+    // ping
+    p.clear();
+    p.write_int64(0);
+
+    sock.write_some(boost::asio::buffer(p.completePacket(1)));
+    boost::posix_time::ptime t1 = boost::posix_time::second_clock::local_time();
+
+    packet_t buffer; buffer.resize(p.completePacket(1).size());
+    sock.read_some(boost::asio::buffer(buffer, buffer.size()));
+
+    boost::posix_time::ptime t2 = boost::posix_time::second_clock::local_time();
+    boost::posix_time::time_duration diff = t2 - t1;
+
+    std::cout << diff.total_milliseconds() << std::endl;
     
 }
 
