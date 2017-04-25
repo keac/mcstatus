@@ -89,6 +89,8 @@ std::string color::mcColorToUnixColor(const std::string& msg)
 
     for (int size = msg.find("§"); size <= msg.rfind("§"); size = msg.find("§", size+1))
     {
+        if (size == -1)
+            break;
         std::string old;
         std::string to;
         for (int i = size; i < size+3; i++)
