@@ -115,15 +115,16 @@ void status::reMotd()
         sock.read_some(boost::asio::buffer(buff, 1));
         json += (&buff[0]);
     }
-
+/*
     std::wstring_convert<std::codecvt<wchar_t, char, std::mbstate_t>>
         converter(new std::codecvt<wchar_t, char, std::mbstate_t>("CHS"));
 
     std::wstring wstr = converter.from_bytes(json);
     std::wcout.imbue(std::locale("chs"));
     std::wcout << wstr << std::endl;
-
-    //json2status(json);
+*/
+    std::cout <<json << '\n';
+    json2status(json);
 
     // ping
     p.clear();
