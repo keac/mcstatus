@@ -4,6 +4,7 @@
 #include <string>
 #include <cstdint>
 #include <iostream>
+#include <codecvt>
 #include <vector>
 
 #include <boost/property_tree/ptree.hpp>
@@ -110,14 +111,19 @@ void status::reMotd()
     while (json.size() < l)
     {
         // Do not use buff[1024]
-        unsigned char buff[1] = {0x00}; 
+        char buff[1] = {0x00}; 
         sock.read_some(boost::asio::buffer(buff, 1));
-        json += reinterpret_cast<char*>(&buff[0]);
+        json += (&buff[0]);
     }
 
-    std::cout << json << std::endl;
+    std::wstring_convert<std::codecvt<wchar_t, char, std::mbstate_t>>
+        converter(new std::codecvt<wchar_t, char, std::mbstate_t>("CHS"));
 
-    json2status(json);
+    std::wstring wstr = converter.from_bytes(json);
+    std::wcout.imbue(std::locale("chs"));
+    std::wcout << wstr << std::endl;
+
+    //json2status(json);
 
     // ping
     p.clear();
