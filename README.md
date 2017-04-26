@@ -1,5 +1,3 @@
-# mcstatus
-
 A Minecraft server status probing library written in C++
 
 [![Build Status](https://travis-ci.org/MoeLeak/mcstatus.svg?branch=master)](https://travis-ci.org/MoeLeak/mcstatus)
@@ -22,6 +20,9 @@ $ mkdir build; cd build
 $ cmake ..
 $ make
 ```
+
+# Requirements
+- C++11 compiler
 
 # Examples
 
