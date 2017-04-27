@@ -4,7 +4,6 @@
 #include <string>
 #include <cstdint>
 #include <iostream>
-#include <codecvt>
 #include <vector>
 
 #include <boost/property_tree/ptree.hpp>
@@ -111,35 +110,26 @@ void status::reMotd()
     while (json.size() < l)
     {
         // Do not use buff[1024]
-        char buff[1] = {0x00}; 
+        unsigned char buff[1] = {0x00}; 
         sock.read_some(boost::asio::buffer(buff, 1));
-        json += (&buff[0]);
+        json += static_cast<char>(buff[0]);
     }
-/*
-    std::wstring_convert<std::codecvt<wchar_t, char, std::mbstate_t>>
-        converter(new std::codecvt<wchar_t, char, std::mbstate_t>("CHS"));
 
-    std::wstring wstr = converter.from_bytes(json);
-    std::wcout.imbue(std::locale("chs"));
-    std::wcout << wstr << std::endl;
-*/
-    std::cout <<json << '\n';
     json2status(json);
 
     // ping
     p.clear();
-    p.write_int64(0);
+    p.write_int64(233333);
+    packet_t buffer = p.completePacket(1);
+    sock.write_some(boost::asio::buffer(buffer));
 
-    sock.write_some(boost::asio::buffer(p.completePacket(1)));
-    boost::posix_time::ptime t1 = boost::posix_time::second_clock::local_time();
+    boost::posix_time::ptime mst1 = boost::posix_time::microsec_clock::local_time();
+    sock.read_some(boost::asio::buffer(buffer));
+    boost::posix_time::ptime mst2 = boost::posix_time::microsec_clock::local_time();
+    boost::posix_time::time_duration msdiff = mst2 - mst1;
 
-    packet_t buffer; buffer.resize(p.completePacket(1).size());
-    sock.read_some(boost::asio::buffer(buffer, buffer.size()));
+    m_motd.ping = msdiff.total_milliseconds();
 
-    boost::posix_time::ptime t2 = boost::posix_time::second_clock::local_time();
-    boost::posix_time::time_duration diff = t2 - t1;
-
-    std::cout << diff.total_milliseconds() << std::endl;
     
 }
 

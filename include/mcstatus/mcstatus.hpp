@@ -8,13 +8,14 @@
 namespace mc
 {
 
-typedef struct motd
+typedef struct
 {
     std::string description;
     std::string kernel;
-    int protocol;
-    int player_max;
-    int player_online;
+    unsigned int ping;
+    unsigned int protocol;
+    unsigned int player_max;
+    unsigned int player_online;
 }motd_t;
 
 class status

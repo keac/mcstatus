@@ -107,7 +107,7 @@ void packet_builder::write_int64(int64_t v)
         buff[i] = tmp >> 56;
         point-=8;
     }
-    for (int i = 0; i < 7; i++)
+    for (int i = 0; i < 8; i++)
         m_packet.push_back(buff[i]);
 }
 

@@ -54,16 +54,20 @@ int main(int argc, char** argv)
     // Get the motd
     mc::status motd(hostname, port);
     mc::motd_t m = motd.getMotd();
+
+    // to UNIX-CONSOLE-COLOR.
+    std::cout << mc::color(m.description).toString() << std::endl;
+
     // Format: player_online/player_max
     std::cout 
-        << "players: "
+        << "Players: "
         << m.player_online
         << "/"
         << m.player_max 
         << std::endl;
 
-    // to UNIX-CONSOLE-COLOR.
-    std::cout << mc::color(m.description).toString() << std::endl;
+    // Ping
+    std::cout << "Ping(ms): " << m.ping << std::endl;
     
     return 0;
 }
