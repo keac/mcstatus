@@ -112,10 +112,24 @@ void status::reMotd()
         // Do not use buff[1024]
         unsigned char buff[1] = {0x00}; 
         sock.read_some(boost::asio::buffer(buff, 1));
-        json += reinterpret_cast<char*>(&buff[0]);
+        json += static_cast<char>(buff[0]);
     }
 
     json2status(json);
+
+    // ping
+    p.clear();
+    p.write_int64(233333);
+    packet_t buffer = p.completePacket(1);
+    sock.write_some(boost::asio::buffer(buffer));
+
+    boost::posix_time::ptime mst1 = boost::posix_time::microsec_clock::local_time();
+    sock.read_some(boost::asio::buffer(buffer));
+    boost::posix_time::ptime mst2 = boost::posix_time::microsec_clock::local_time();
+    boost::posix_time::time_duration msdiff = mst2 - mst1;
+
+    m_motd.ping = msdiff.total_milliseconds();
+
     
 }
 

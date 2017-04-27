@@ -99,7 +99,16 @@ void packet_builder::write_int32(int32_t v)
 
 void packet_builder::write_int64(int64_t v)
 {
-    m_packet.push_back(static_cast<unsigned char>(v));
+    auto buff = new unsigned char[8];
+    int point=56;
+    for(int i=7;i>=0;i--)
+    {
+        long long tmp = v<<point;
+        buff[i] = tmp >> 56;
+        point-=8;
+    }
+    for (int i = 0; i < 8; i++)
+        m_packet.push_back(buff[i]);
 }
 
 void packet_builder::write_varint32(int32_t v)
