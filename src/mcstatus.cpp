@@ -29,13 +29,15 @@ status::~status()
 
 int status::unpack_varint()
 {
-    int d = 0;
-    for (int i = 0; i < 5; i++)
+    int d = 0; // 最终结果
+    for (int i = 0; i < 5; i++) // 最多四个字节
     {
         uint8_t b[1] = {0x00};
         sock.read_some(boost::asio::buffer(b, 1));
-        d |= (b[0] & 0x7F) << 7*i;
-        if (!(b[0] & 0x80))
+        // b 是要解的varint
+
+        d |= (b[0] & 0x7F) << 7*i; // i 是要操作的字节数
+        if (!(b[0] & 0x80)) // 负数
             break;
     }
 
@@ -81,18 +83,8 @@ motd_t status::getMotd()
     return m_motd;
 }
 
-void status::reMotd()
+void status::motd()
 {
-    try
-    {
-        sock.open(boost::asio::ip::tcp::v4());
-        sock.connect(ep);
-    }
-    catch (...)
-    {
-        std::cout << "Can not connect to server :(" << std::endl;
-    }
-
     mc::packet_builder p;
     p.write_varint32(316); // Version number
     p.write_string(sock.remote_endpoint().address().to_string()); // Server IP
@@ -102,9 +94,9 @@ void status::reMotd()
     sock.write_some(boost::asio::buffer(p.completePacket(0))); // Send a handshake
     sock.write_some(boost::asio::buffer(mc::packet_builder().completePacket(0))); // Request the motd
     
-    unpack_varint();
-    unpack_varint();
-    int l = unpack_varint();
+    unpack_varint(); // lenght
+    unpack_varint(); // packet id
+    int l = unpack_varint(); // lenght of string(utf-8)
 
     std::string json;
     while (json.size() < l)
@@ -116,9 +108,11 @@ void status::reMotd()
     }
 
     json2status(json);
+}
 
-    // ping
-    p.clear();
+void status::ping()
+{
+    mc::packet_builder p;
     p.write_int64(233333);
     packet_t buffer = p.completePacket(1);
     sock.write_some(boost::asio::buffer(buffer));
@@ -129,7 +123,24 @@ void status::reMotd()
     boost::posix_time::time_duration msdiff = mst2 - mst1;
 
     m_motd.ping = msdiff.total_milliseconds();
+}
 
+void status::reMotd()
+{
+    try
+    {
+        sock.open(boost::asio::ip::tcp::v4());
+        sock.connect(ep);
+    }
+    catch (...)
+    {
+        std::cout << "Can not connect to server :(" << std::endl;
+        exit(1);
+    }
+
+    motd();
+    ping();
+    
     
 }
 

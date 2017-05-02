@@ -25,10 +25,14 @@ public:
            uint16_t port = 25565);
     ~status();
 public:
-    int unpack_varint();
-    void json2status(const std::string& json);
     void reMotd();
     motd_t getMotd();
+
+private:
+    void motd();
+    void ping();
+    int unpack_varint();
+    void json2status(const std::string& json);
 
 private:
     std::string ipv4;
