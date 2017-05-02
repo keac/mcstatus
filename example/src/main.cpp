@@ -68,6 +68,10 @@ int main(int argc, char** argv)
 
     // Ping
     std::cout << "Ping(ms): " << m.ping << std::endl;
+
+    std::cout << "Kernel: " << m.kernel << std::endl;
+    std::cout << "Protocol: " << m.protocol << std::endl;
+    //std::cout << "Server ICON: " << m.favicon << std::endl; // base64ed image
     
     return 0;
 }

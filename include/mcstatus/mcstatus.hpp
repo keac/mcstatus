@@ -12,6 +12,7 @@ typedef struct
 {
     std::string description;
     std::string kernel;
+    std::string favicon;
     unsigned int ping;
     unsigned int protocol;
     unsigned int player_max;

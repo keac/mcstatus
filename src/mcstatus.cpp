@@ -60,22 +60,28 @@ void status::json2status(const std::string& json)
         exit(1);
     }
 
-    // get description(main motd)
     m_motd.description = pt.get<std::string>("description");
+    m_motd.favicon = pt.get<std::string>("favicon");
     if (m_motd.description.empty())
     {
-        for (auto& description : pt.get_child("description"))
+        for (const auto& description : pt.get_child("description"))
             m_motd.description = description.second.get_value<std::string>();
     }
 
-
-    // get online and player max
     std::vector<std::string> players_array;
-    for (auto& players : pt.get_child("players"))
+    for (const auto& players : pt.get_child("players"))
         players_array.push_back(players.second.get_value<std::string>());
 
-    m_motd.player_max = std::stoi(players_array[0]);
-    m_motd.player_online = std::stoi(players_array[1]);
+    std::vector<std::string> versions_array;
+    for (const auto& versions : pt.get_child("version"))
+        versions_array.push_back(versions.second.get_value<std::string>());
+
+    
+    m_motd.kernel = versions_array.at(0);
+    m_motd.protocol = std::stoi(versions_array.at(1));
+
+    m_motd.player_max = std::stoi(players_array.at(0));
+    m_motd.player_online = std::stoi(players_array.at(1));
 }
 
 motd_t status::getMotd()
