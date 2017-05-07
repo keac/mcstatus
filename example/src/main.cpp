@@ -16,7 +16,7 @@ void usage()
 
 int main(int argc, char** argv)
 {
-    if (!argc) usage(); // No parameters
+    if (argc == true) usage(); // No parameters
 
     // Server's ip(v4) and port
     std::string hostname;
