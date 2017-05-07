@@ -133,16 +133,8 @@ void status::ping()
 
 void status::reMotd()
 {
-    try
-    {
-        sock.open(boost::asio::ip::tcp::v4());
-        sock.connect(ep);
-    }
-    catch (...)
-    {
-        std::cout << "Can not connect to server :(" << std::endl;
-        exit(1);
-    }
+    sock.open(boost::asio::ip::tcp::v4());
+    sock.connect(ep);
 
     motd();
     ping();

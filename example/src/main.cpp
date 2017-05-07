@@ -20,7 +20,7 @@ int main(int argc, char** argv)
 
     // Server's ip(v4) and port
     std::string hostname;
-    uint16_t port;
+    uint16_t port = 25565;
 
     // Process the command-line parameters
     int opt_idx = 1;
@@ -51,9 +51,19 @@ int main(int argc, char** argv)
 
     if (argc - opt_idx != 0) usage(); // no zuo no die XD
 
+    mc::status* motd;
+
     // Get the motd
-    mc::status motd(hostname, port);
-    mc::motd_t m = motd.getMotd();
+    try
+    {
+        motd = new mc::status(hostname, port);
+    }
+    catch(...)
+    {
+        std::cout << "Can not to connect :(" << std::endl;
+        return -1;
+    }
+    mc::motd_t m = motd->getMotd();
 
     // to UNIX-CONSOLE-COLOR.
     std::cout << mc::color(m.description).toString() << std::endl;
@@ -73,5 +83,6 @@ int main(int argc, char** argv)
     std::cout << "Protocol: " << m.protocol << std::endl;
     //std::cout << "Server ICON: " << m.favicon << std::endl; // base64ed image
     
-    return 0;
+    delete motd;
+    
 }
