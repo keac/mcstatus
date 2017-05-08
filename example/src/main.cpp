@@ -68,13 +68,8 @@ int main(int argc, char** argv)
     // to UNIX-CONSOLE-COLOR.
     std::cout << mc::color(m.description).toString() << std::endl;
 
-    // Format: player_online/player_max
-    std::cout 
-        << "Players: "
-        << m.player_online
-        << "/"
-        << m.player_max 
-        << std::endl;
+    // e.g "3/100"
+    printf("%d/%d\n", m.players_online, m.players_max);
 
     // Ping
     std::cout << "Ping(ms): " << m.ping << std::endl;

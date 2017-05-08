@@ -15,8 +15,8 @@ typedef struct
     std::string favicon;
     unsigned int ping;
     unsigned int protocol;
-    unsigned int player_max;
-    unsigned int player_online;
+    unsigned int players_max;
+    unsigned int players_online;
 }motd_t;
 
 class status

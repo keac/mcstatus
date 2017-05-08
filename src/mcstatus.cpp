@@ -80,8 +80,8 @@ void status::json2status(const std::string& json)
     m_motd.kernel = versions_array.at(0);
     m_motd.protocol = std::stoi(versions_array.at(1));
 
-    m_motd.player_max = std::stoi(players_array.at(0));
-    m_motd.player_online = std::stoi(players_array.at(1));
+    m_motd.players_max = std::stoi(players_array.at(0));
+    m_motd.players_online = std::stoi(players_array.at(1));
 }
 
 motd_t status::getMotd()
