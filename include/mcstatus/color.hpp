@@ -18,7 +18,7 @@ public:
     color(const char* s);
     color(const std::string& s);
 
-    std::string toString() const;
+    void output() const;
 
     static color from_string(const std::string& s);
 private:

@@ -65,8 +65,8 @@ int main(int argc, char** argv)
     }
     mc::motd_t m = motd->getMotd();
 
-    // to UNIX-CONSOLE-COLOR.
-    std::cout << mc::color(m.description).toString() << std::endl;
+    // Outputting to console
+    mc::color(m.description).output();
 
     // e.g "3/100"
     printf("%d/%d\n", m.players_online, m.players_max);

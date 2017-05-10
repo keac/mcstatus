@@ -53,9 +53,9 @@ color::color(const std::string& s)
     *this = from_string(s);
 }
 
-std::string color::toString() const
+void color::output() const
 {
-    return result;
+    std::cout << result << std::endl;
 }
 
 int color::minecraftcolor2sgr(char s)

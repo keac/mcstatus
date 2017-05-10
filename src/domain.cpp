@@ -28,7 +28,6 @@ boost::asio::ip::tcp::endpoint domain::domain2endpoint()
     boost::asio::ip::tcp::resolver::query query(m_hostname, m_port);
 
     auto iter = resolver.resolve(query);
-    std::cout << iter->endpoint().address() << std::endl;
     return iter->endpoint();
 }
 
