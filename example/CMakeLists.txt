@@ -10,7 +10,7 @@ if(${Boost_FOUND})
 endif()
 # [Boost end]
 
-add_subdirectory("../" "../bin")
+add_subdirectory("../" "mcstatus")
 include_directories("../include")
 
 set (SOURCES_LIST

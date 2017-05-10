@@ -6,6 +6,7 @@ set(PROJECT_INCLUDE_DIR "./include")
 include_directories(${PROJECT_INCLUDE_DIR})
 
 set (SOURCE_FILES
+    "${PROJECT_SOURCE_DIR}/domain.cpp"
     "${PROJECT_SOURCE_DIR}/color.cpp"
     "${PROJECT_SOURCE_DIR}/packet.cpp"
     "${PROJECT_SOURCE_DIR}/mcstatus.cpp"

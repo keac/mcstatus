@@ -22,7 +22,7 @@ typedef struct
 class status
 {
 public:
-    status(const std::string& ipv4,
+    status(const std::string& hostname,
            uint16_t port = 25565);
     ~status();
 public:

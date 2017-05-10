@@ -94,7 +94,9 @@ void packet_builder::write_uint16(uint16_t v)
 
 void packet_builder::write_int32(int32_t v)
 {
-    m_packet.push_back(static_cast<unsigned char>(v));
+    const char* buffer = reinterpret_cast<const char*>(&m_packet);
+    m_packet.insert(m_packet.end(), buffer, buffer+sizeof(int));
+
 }
 
 void packet_builder::write_int64(int64_t v)

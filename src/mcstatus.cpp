@@ -1,4 +1,5 @@
 #include "mcstatus/mcstatus.hpp"
+#include "mcstatus/domain.hpp"
 #include "mcstatus/packet.hpp"
 
 #include <string>
@@ -13,9 +14,9 @@
 namespace mc
 {
 
-status::status(const std::string& ipv4,
+status::status(const std::string& hostname,
                uint16_t port) :
-    ep(boost::asio::ip::address::from_string(ipv4), port),
+    ep(mc::domain(hostname, port).domain2endpoint()),
     sock(service)
 {
     reMotd();
