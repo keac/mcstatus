@@ -5,6 +5,7 @@
 #include <vector>
 
 #include <boost/algorithm/string.hpp>
+#include <boost/endian/conversion.hpp>
 
 namespace
 {
@@ -94,8 +95,9 @@ void packet_builder::write_uint16(uint16_t v)
 
 void packet_builder::write_int32(int32_t v)
 {
-    const char* buffer = reinterpret_cast<const char*>(&m_packet);
-    m_packet.insert(m_packet.end(), buffer, buffer+sizeof(int));
+    std::vector<unsigned char> buffer; buffer.resize(4);
+    *reinterpret_cast<int*>(buffer.data()) = boost::endian::native_to_big<int>(v);
+    m_packet.insert(m_packet.end(), buffer.begin(), buffer.end());
 
 }
 
@@ -111,6 +113,8 @@ void packet_builder::write_int64(int64_t v)
     }
     for (int i = 0; i < 8; i++)
         m_packet.push_back(buff[i]);
+
+    delete buff;
 }
 
 void packet_builder::write_varint32(int32_t v)
