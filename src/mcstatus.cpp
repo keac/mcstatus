@@ -19,7 +19,6 @@ status::status(const std::string& hostname,
     ep(mc::domain(hostname, port).domain2endpoint()),
     sock(service)
 {
-    reMotd();
 }
 
 status::~status()
@@ -85,11 +84,6 @@ void status::json2status(const std::string& json)
     m_motd.players_online = std::stoi(players_array.at(1));
 }
 
-motd_t status::getMotd()
-{
-    return m_motd;
-}
-
 void status::motd()
 {
     mc::packet_builder p;
@@ -132,7 +126,7 @@ void status::ping()
     m_motd.ping = msdiff.total_milliseconds();
 }
 
-void status::reMotd()
+motd_t status::requestMotd()
 {
     sock.open(boost::asio::ip::tcp::v4());
     sock.connect(ep);
@@ -140,6 +134,7 @@ void status::reMotd()
     motd();
     ping();
     
+    return m_motd;
     
 }
 

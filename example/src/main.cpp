@@ -63,7 +63,7 @@ int main(int argc, char** argv)
         std::cout << "Can not to connect :(" << std::endl;
         return -1;
     }
-    mc::motd_t m = motd->getMotd();
+    mc::motd_t m = motd->requestMotd();
 
     // Outputting to console
     mc::color(m.description).output();

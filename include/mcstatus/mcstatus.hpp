@@ -26,8 +26,7 @@ public:
            uint16_t port = 25565);
     ~status();
 public:
-    void reMotd();
-    motd_t getMotd();
+    motd_t requestMotd();
 
 private:
     void motd();

@@ -113,8 +113,7 @@ void packet_builder::write_int64(int64_t v)
     }
     for (int i = 0; i < 8; i++)
         m_packet.push_back(buff[i]);
-
-    delete buff;
+    delete[] buff;
 }
 
 void packet_builder::write_varint32(int32_t v)
