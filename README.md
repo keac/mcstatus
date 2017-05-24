@@ -15,10 +15,7 @@ $ make
 ```
 On Arch Linux: 
 ```
-# pacman -S gcc cmake boost
-$ mkdir build; cd build
-$ cmake ..
-$ make
+$ yaourt -S mcstatus
 ```
 
 # Requirements
