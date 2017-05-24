@@ -30,6 +30,7 @@ public:
     void write_bool(bool v);
     void write_string(const std::string& v);
     void clear();
+    size_t lenght() const;
     packet_t completePacket(int packetID);
     packet_t toRawPacket();
 
@@ -38,6 +39,7 @@ public:
 
 protected:
     std::deque<unsigned char> m_packet;
+    size_t lenght_; // lenght of completed packet
 };
 
 } // namespace mc

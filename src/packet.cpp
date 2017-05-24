@@ -164,8 +164,15 @@ void packet_builder::clear()
     m_packet.clear();
 }
 
+size_t packet_builder::lenght() const
+{
+    return lenght_;
+}
+
 packet_t packet_builder::completePacket(int packetID)
 {
+    assert(packetID == 0);
+
     m_packet.push_front(static_cast<unsigned char>(packetID));
     m_packet.push_front(static_cast<unsigned char>(m_packet.size())); // FIXME: use varint instead of unsigned char (ugly LOL
     
