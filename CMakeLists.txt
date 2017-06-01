@@ -26,6 +26,8 @@ add_library(mcstatus SHARED ${SOURCE_FILES})
 
 # linking boost
 target_link_libraries(mcstatus ${Boost_LIBRARIES})
+# fix raspberry pi
+target_link_libraries(mcstatus -lpthread -lm)
 
 # Install
 install (TARGETS mcstatus LIBRARY DESTINATION lib)
