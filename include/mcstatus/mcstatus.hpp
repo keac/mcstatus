@@ -37,12 +37,15 @@ private:
 private:
     std::string ipv4;
     short port;
+
 private:
     motd_t m_motd;
+
 private:
     boost::asio::io_service           service;
     boost::asio::ip::tcp::endpoint    ep;
     boost::asio::ip::tcp::socket      sock;
+
 };
 
 } // namespace mc

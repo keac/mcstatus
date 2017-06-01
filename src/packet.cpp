@@ -59,7 +59,7 @@ packet_builder packet_builder::from_string(const std::string& packets)
     }
 
     packet_builder packet_new;
-    packet_new.m_packet = std::deque<unsigned char>(buffer.begin(), buffer.end());
+    packet_new.packet_ = std::deque<unsigned char>(buffer.begin(), buffer.end());
 
     return packet_new;
 }
@@ -67,88 +67,78 @@ packet_builder packet_builder::from_string(const std::string& packets)
 
 void packet_builder::write_int8(int8_t v)
 {
-    m_packet.push_back(static_cast<unsigned char>(v));
+    packet_.push_back(static_cast<unsigned char>(v));
 }
 
 void packet_builder::write_uint8(uint8_t v)
 {
-    m_packet.push_back(static_cast<unsigned char>(v));
+    packet_.push_back(static_cast<unsigned char>(v));
 }
 
 void packet_builder::write_int16(int16_t v)
 {
-    uint8_t l = static_cast<uint8_t>(v & 0x00FF);
-    uint8_t h = static_cast<uint8_t>((v & 0xFF00) >> 8);
-
-    m_packet.push_back(h); // higt
-    m_packet.push_back(l); // low
-
+    std::vector<unsigned char> buffer; buffer.resize(sizeof(v));
+    *reinterpret_cast<int*>(buffer.data()) = boost::endian::native_to_big<decltype(v)>(v);
+    packet_.insert(packet_.end(), buffer.begin(), buffer.end());
 }
 void packet_builder::write_uint16(uint16_t v)
 {
-    uint8_t l = static_cast<uint8_t>(v & 0x00FF);
-    uint8_t h = static_cast<uint8_t>((v & 0xFF00) >> 8);
-
-    m_packet.push_back(h); // higt
-    m_packet.push_back(l); // low
+    std::vector<unsigned char> buffer; buffer.resize(sizeof(v));
+    *reinterpret_cast<int*>(buffer.data()) = boost::endian::native_to_big<decltype(v)>(v);
+    packet_.insert(packet_.end(), buffer.begin(), buffer.end());
 }
 
 void packet_builder::write_int32(int32_t v)
 {
-    std::vector<unsigned char> buffer; buffer.resize(4);
-    *reinterpret_cast<int*>(buffer.data()) = boost::endian::native_to_big<int>(v);
-    m_packet.insert(m_packet.end(), buffer.begin(), buffer.end());
-
+    std::vector<unsigned char> buffer; buffer.resize(sizeof(v));
+    *reinterpret_cast<int*>(buffer.data()) = boost::endian::native_to_big<decltype(v)>(v);
+    packet_.insert(packet_.end(), buffer.begin(), buffer.end());
 }
 
 void packet_builder::write_int64(int64_t v)
 {
-    auto buff = new unsigned char[8];
-    int point=56;
-    for(int i=7;i>=0;i--)
-    {
-        long long tmp = v<<point;
-        buff[i] = tmp >> 56;
-        point-=8;
-    }
-    for (int i = 0; i < 8; i++)
-        m_packet.push_back(buff[i]);
-    delete[] buff;
+    std::vector<unsigned char> buffer; buffer.resize(sizeof(v));
+    *reinterpret_cast<int*>(buffer.data()) = boost::endian::native_to_big<decltype(v)>(v);
+    packet_.insert(packet_.end(), buffer.begin(), buffer.end());
 }
 
 void packet_builder::write_varint32(int32_t v)
 {
     while (v > 127)
     {
-        m_packet.push_back(static_cast<unsigned char>(v & 127) | 128);
+        packet_.push_back(static_cast<unsigned char>(v & 127) | 128);
         v >>= 7;
     }
-    m_packet.push_back(static_cast<unsigned char>(v & 127));
+    packet_.push_back(static_cast<unsigned char>(v & 127));
 }
 
 void packet_builder::write_varint64(int64_t v)
 {
     while (v > 127)
     {
-        m_packet.push_back(static_cast<unsigned char>(v & 127) | 128);
+        packet_.push_back(static_cast<unsigned char>(v & 127) | 128);
         v >>= 7;
     }
-    m_packet.push_back(static_cast<unsigned char>(v & 127));
+    packet_.push_back(static_cast<unsigned char>(v & 127));
 }
 
 void packet_builder::write_float(float v)
 {
-    m_packet.push_back(static_cast<unsigned char>(v));
+    std::vector<unsigned char> buffer; buffer.resize(sizeof(v));
+    *reinterpret_cast<int*>(buffer.data()) = boost::endian::native_to_big<decltype(v)>(v);
+    packet_.insert(packet_.end(), buffer.begin(), buffer.end());
 }
 
 void packet_builder::write_double(double v)
 {
-    m_packet.push_back(static_cast<unsigned char>(v));
+    std::vector<unsigned char> buffer; buffer.resize(sizeof(v));
+    *reinterpret_cast<int*>(buffer.data()) = boost::endian::native_to_big<decltype(v)>(v);
+    packet_.insert(packet_.end(), buffer.begin(), buffer.end());
 }
 
 void packet_builder::write_bool(bool v)
 {
-    m_packet.push_back(static_cast<unsigned char>(v));
+    packet_.push_back(static_cast<unsigned char>(v));
 }
 
 void packet_builder::write_string(const std::string& v)
@@ -156,12 +146,12 @@ void packet_builder::write_string(const std::string& v)
     assert(!v.empty());
 
     write_varint32(v.size());
-    for (auto&& x : v) m_packet.push_back(x);
+    for (auto&& x : v) packet_.push_back(x);
 }
 
 void packet_builder::clear()
 {
-    m_packet.clear();
+    packet_.clear();
 }
 
 size_t packet_builder::lenght() const
@@ -171,17 +161,15 @@ size_t packet_builder::lenght() const
 
 packet_t packet_builder::completePacket(int packetID)
 {
-    assert(packetID == 0);
-
-    m_packet.push_front(static_cast<unsigned char>(packetID));
-    m_packet.push_front(static_cast<unsigned char>(m_packet.size())); // FIXME: use varint instead of unsigned char (ugly LOL
+    packet_.push_front(static_cast<unsigned char>(packetID));
+    packet_.push_front(static_cast<unsigned char>(packet_.size())); // FIXME: use varint instead of unsigned char (ugly LOL
     
-    return packet_t(m_packet.begin(), m_packet.end());
+    return packet_t(packet_.begin(), packet_.end());
 }
 
 packet_t packet_builder::toRawPacket()
 {
-    return packet_t(m_packet.begin(), m_packet.end());
+    return packet_t(packet_.begin(), packet_.end());
 }
 
 } // namespace mc

@@ -38,7 +38,7 @@ public:
     static packet_builder from_string(const std::string& packets);
 
 protected:
-    std::deque<unsigned char> m_packet;
+    std::deque<unsigned char> packet_;
     size_t lenght_; // lenght of completed packet
 };
 
