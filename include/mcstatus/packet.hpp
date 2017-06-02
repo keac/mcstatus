@@ -30,7 +30,7 @@ public:
     void write_bool(bool v);
     void write_string(const std::string& v);
     void clear();
-    size_t lenght() const;
+    size_t lenght(int packetID) const;
     packet_t completePacket(int packetID);
     packet_t toRawPacket();
 
@@ -38,7 +38,7 @@ public:
     static packet_builder from_string(const std::string& packets);
 
 protected:
-    std::deque<unsigned char> m_packet;
+    std::deque<unsigned char> packet_;
     size_t lenght_; // lenght of completed packet
 };
 
