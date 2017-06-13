@@ -61,7 +61,11 @@ void status::json2status(const std::string& json)
     }
 
     m_motd.description = pt.get<std::string>("description");
-    m_motd.favicon = pt.get<std::string>("favicon");
+    try
+    {
+        m_motd.favicon = pt.get<std::string>("favicon");
+    }
+    catch(boost::property_tree::ptree_bad_path& ec) {}
     if (m_motd.description.empty())
     {
         for (const auto& description : pt.get_child("description"))
