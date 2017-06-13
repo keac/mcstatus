@@ -26,7 +26,7 @@ int main(int argc, char** argv)
     int opt_idx = 1;
     for (; opt_idx < argc; opt_idx++)
     {
-        if (!*argv[opt_idx] =='-')
+        if (*argv[opt_idx] !='-')
             break;
 
         if (!strcmp(argv[opt_idx], "--host") ||
@@ -52,18 +52,20 @@ int main(int argc, char** argv)
     if (argc - opt_idx != 0) usage(); // no zuo no die XD
 
     mc::status* motd;
+    mc::motd_t m;
 
     // Get the motd
-    try
+    boost::system::error_code ec;
+    motd = new mc::status(hostname, port, ec);
+    m = motd->requestMotd();
+    if (ec != 0)
     {
-        motd = new mc::status(hostname, port);
+        // failed to get motd...
+        // reference: https://stackoverflow.com/questions/21046742/using-boostsystemerror-code-in-c
+        fprintf(stderr, "server is down\n");
+        return 1;
     }
-    catch(...)
-    {
-        std::cout << "Can not to connect :(" << std::endl;
-        return -1;
-    }
-    mc::motd_t m = motd->requestMotd();
+    
 
     // Outputting to console
     mc::color(m.description).output();

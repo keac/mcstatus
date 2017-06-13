@@ -12,7 +12,7 @@ set (SOURCE_FILES
     "${PROJECT_SOURCE_DIR}/mcstatus.cpp"
 )
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -g")
 
 # [Boost]
 find_package(Boost 1.59 COMPONENTS system REQUIRED)

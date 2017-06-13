@@ -4,6 +4,8 @@
 #include <string>
 #include <cstdint>
 #include <boost/asio.hpp>
+#include <boost/system/system_error.hpp>
+#include <boost/system/error_code.hpp>
 
 namespace mc
 {
@@ -22,8 +24,13 @@ typedef struct
 class status
 {
 public:
+
     status(const std::string& hostname,
-           uint16_t port = 25565);
+           uint16_t port);
+    status(const std::string& hostname,
+           uint16_t port,
+           boost::system::error_code& ec);
+
     ~status();
 public:
     motd_t requestMotd();
@@ -40,6 +47,7 @@ private:
 private:
     motd_t m_motd;
 private:
+    boost::system::error_code* ec_;
     boost::asio::io_service           service;
     boost::asio::ip::tcp::endpoint    ep;
     boost::asio::ip::tcp::socket      sock;

@@ -16,8 +16,18 @@ namespace mc
 
 status::status(const std::string& hostname,
                uint16_t port) :
-    ep(mc::domain(hostname, port).domain2endpoint()),
-    sock(service)
+    ep(mc::domain(hostname, port, *ec_).domain2endpoint()),
+    sock(service),
+    ec_()
+{
+}
+
+status::status(const std::string& hostname,
+               uint16_t port,
+               boost::system::error_code& ec) :
+    ep(mc::domain(hostname, port, ec).domain2endpoint()),
+    sock(service),
+    ec_(&ec)
 {
 }
 
@@ -133,7 +143,10 @@ void status::ping()
 motd_t status::requestMotd()
 {
     sock.open(boost::asio::ip::tcp::v4());
-    sock.connect(ep);
+    sock.connect(ep, *ec_);
+
+    if (*ec_ != 0)
+        return motd_t();
 
     motd();
     ping();
